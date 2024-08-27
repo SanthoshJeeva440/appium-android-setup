@@ -60,6 +60,7 @@ jobs:
           adb start-server
           adb devices
           adb shell getprop ro.build.version.release
+          adb install keywords/Calc.apk
 
       - name: Install Python Libraries
         run: |

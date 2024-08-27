@@ -4,12 +4,11 @@ Library     AppiumLibrary
 *** Keywords ***
 
 Open Calc
-        AppiumLibrary.Open Application    remote_url=http://127.0.0.1:4723/wd/hub
+        AppiumLibrary.Open Application    http://127.0.0.1:4723/wd/hub
         ...    platformName=Android
         ...    deviceName=emulator-5554
-        ...    app=keywords/Calc.apk
+        ...    appPackage=com.google.android.calculator
+        ...    appActivity=com.android.calculator2.Calculator
         ...    platformVersion=13
         ...    automationName=UiAutomator2
-        ...    autoGrantPermissions=true
-        ...    noReset=false
         ...    newCommandTimeout=450000
