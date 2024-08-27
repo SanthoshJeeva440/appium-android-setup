@@ -60,3 +60,25 @@ jobs:
           adb start-server
           adb devices
           adb shell getprop ro.build.version.release
+
+      - name: Install Appium & Run
+        run:  |
+          npm install appium --save-dev --no-audit
+          npx appium driver install uiautomator2
+          npx appium --address 127.0.0.1 --port 4723 --base-path /wd/hub  --allow-cors
+
+      - name: Install Python Libraries
+        run: |
+          python3 -m pip install robotframework
+          python3 -m pip install robotframework-appiumlibrary
+
+      - name: Run Robot Test
+        run: |
+          python3 -m robot -d ./reports ./test/Test.robot
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: reports
+          path: reports
