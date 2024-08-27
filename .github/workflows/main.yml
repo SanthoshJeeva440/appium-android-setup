@@ -43,4 +43,5 @@ jobs:
       - name: check ADB Version
         run: |
           adb --version
+          adb devices
         
