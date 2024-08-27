@@ -72,7 +72,11 @@ jobs:
         run:  |
           chmod +x ./runappium.sh
           ./runappium.sh
-          
+
+      - name: Run Suite
+        run: |
+          python3 -m robot -d ./reports ./test/Test.robot
+
       - name: Upload test results
         uses: actions/upload-artifact@v3
         if: always()
