@@ -61,11 +61,6 @@ jobs:
           adb devices
           adb shell getprop ro.build.version.release
 
-      - name: Install Appium & Run
-        run:  |
-          chmod +x ./runappium.sh
-          ./runappium.sh
-
       - name: Install Python Libraries
         run: |
           python3 -m pip install robotframework
@@ -73,10 +68,11 @@ jobs:
           python3 -m pip install robotframework-seleniumlibrary
           python3 -m pip install webdriver-manager
 
-      - name: Run Robot Test
-        run: |
-          python3 -m robot -d ./reports ./test/Test.robot
-
+      - name: Install Appium & Run
+        run:  |
+          chmod +x ./runappium.sh
+          ./runappium.sh
+          
       - name: Upload test results
         uses: actions/upload-artifact@v3
         if: always()
