@@ -57,7 +57,7 @@ function check_emulator_status () {
   spinner=( "⠹" "⠺" "⠼" "⠶" "⠦" "⠧" "⠇" "⠏" )
   i=0
   # Get the timeout value from the environment variable or use the default value of 300 seconds (5 minutes)
-  timeout=${EMULATOR_TIMEOUT:-500}
+  timeout=${EMULATOR_TIMEOUT:-300}
 
   while true; do
     result=$(adb shell getprop sys.boot_completed 2>&1)
