@@ -11,7 +11,7 @@ env:
   API_LEVEL: 33
   ANDROID_BUILD_TOOLS_VERSION: 33.0.2
   ANDROID_SDK_PACKAGES: system-images;android-33;google_apis_playstore;x86_64 platforms;android-33 build-tools;33.0.2 platform-tools emulator
-  EMULATOR_TIMEOUT: 350
+  EMULATOR_TIMEOUT: 100
   EMULATOR_NAME: nexus
 
 jobs:
@@ -38,3 +38,8 @@ jobs:
         run: |
           chmod +x ./start_emu_headless.sh
           EMULATOR_TIMEOUT=$EMULATOR_TIMEOUT EMULATOR_NAME=$EMULATOR_NAME ./start_emu_headless.sh
+
+      - name: ADB Version
+        run: |
+          adb --version
+          adb devices
