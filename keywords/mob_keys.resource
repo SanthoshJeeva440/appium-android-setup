@@ -14,6 +14,7 @@ Open Calc
         ...    automationName=UiAutomator2
         ...    newCommandTimeout=450000
         ...    uiautomator2ServerLaunchTimeout=200000
+        ...    adbExecTimeout=50000
 
 Close Calc
         AppiumLibrary.Close Application
