@@ -13,6 +13,7 @@ Open Calc
         ...    platformVersion=13
         ...    automationName=UiAutomator2
         ...    newCommandTimeout=450000
+        ...    uiautomator2ServerLaunchTimeout=200000
 
 Close Calc
         AppiumLibrary.Close Application
