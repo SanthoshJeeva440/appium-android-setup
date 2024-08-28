@@ -4,6 +4,7 @@ Library     AppiumLibrary
 *** Keywords ***
 
 Open Calc
+        Sleep      30s
         AppiumLibrary.Open Application    http://127.0.0.1:4723/wd/hub
         ...    platformName=Android
         ...    deviceName=emulator-5554
