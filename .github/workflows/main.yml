@@ -56,8 +56,7 @@ jobs:
       - name: ADB Version
         run: |
           adb --version
-          adb kill-server
-          adb start-server
+          adb wait-for-device
           adb devices
           adb shell getprop ro.build.version.release
           adb install keywords/Calc.apk
