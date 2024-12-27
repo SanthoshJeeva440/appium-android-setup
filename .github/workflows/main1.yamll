@@ -1,0 +1,40 @@
+name: Android Emulator CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  android-emulator:
+    runs-on: ubuntu-latest
+    container:
+      image: reactnativecommunity/docker-android
+      options: --user root
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openjdk-11-jdk
+
+      - name: Start Emulator
+        run: |
+          # Start the Android Emulator
+          emulator -avd Pixel_3_API_30 -noaudio -no-window -gpu off &
+
+          # Wait for the emulator to boot up
+          adb wait-for-device
+
+      - name: Run Tests
+        run: |
+          # Run your test command, e.g., with Gradle or any other Android test tool
+          ./gradlew connectedAndroidTest
+          adb devices
+
+      - name: Stop Emulator
+        run: |
+          adb emu kill
