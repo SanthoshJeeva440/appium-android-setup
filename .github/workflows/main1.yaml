@@ -1,40 +1,51 @@
-name: Android Emulator CI
+name: Run Android Emulator
 
 on:
   push:
+    branches:
+      - main
+  pull_request:
     branches:
       - main
 
 jobs:
   android-emulator:
     runs-on: ubuntu-latest
-    container:
-      image: budtmo/docker-android-emulator:latest
-      options: --user root
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    # Step 1: Checkout the Code
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Install Dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y openjdk-11-jdk
+    # Step 2: Set up Java
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'adopt'
 
-      - name: Start Emulator
-        run: |
-          # Start the Android Emulator
-          emulator -avd Pixel_3_API_30 -noaudio -no-window -gpu off &
+    # Step 3: Set up Android SDK
+    - name: Set up Android SDK
+      uses: android-actions/setup-android@v2
+      with:
+        api-level: 30
+        build-tools: 30.0.3
+        target: default
+        ndk: ''
 
-          # Wait for the emulator to boot up
-          adb wait-for-device
+    # Step 4: Start Android Emulator
+    - name: Start Android Emulator
+      run: |
+        echo "Starting emulator..."
+        $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window -no-snapshot-load -accel auto &
+        adb wait-for-device
+        adb shell input keyevent 82
 
-      - name: Run Tests
-        run: |
-          # Run your test command, e.g., with Gradle or any other Android test tool
-          ./gradlew connectedAndroidTest
-          adb devices
+    # Step 5: Run Tests
+    - name: Run Tests
+      run: ./gradlew connectedAndroidTest
 
-      - name: Stop Emulator
-        run: |
-          adb emu kill
+    # Step 6: Stop Emulator
+    - name: Stop Emulator
+      if: always()
+      run: adb -s emulator-5554 emu kill
